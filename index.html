@@ -102,7 +102,6 @@
     </style>
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function() {
-            // List of logos available in the 'logos' folder
             var logos = [
                 'logos/logo0.png',
                 'logos/logo1.png',
@@ -115,14 +114,42 @@
                 // Add more image paths as needed
             ];
 
-            // Function to select a random logo
             function getRandomLogo() {
                 var index = Math.floor(Math.random() * logos.length);
                 return logos[index];
             }
 
-            // Set the src of the logo-img to a random logo
-            document.querySelector('.logo-img').src = getRandomLogo();
+            function addWatermark(src) {
+                var img = new Image();
+                img.onload = function() {
+                    var canvas = document.createElement('canvas');
+                    var ctx = canvas.getContext('2d');
+                    
+                    // Set canvas size to the image size
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    
+                    // Draw the image onto the canvas
+                    ctx.drawImage(img, 0, 0);
+                    
+                    // Set watermark text style
+                    ctx.font = '30px Arial';
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)'; // White text with opacity
+                    ctx.fillText('Buddy The Dog (@ohmybuddyboy)', 10, img.height - 30); // Position at bottom left
+                    
+                    // Replace the image src with the canvas image
+                    document.querySelector('.logo-img').src = canvas.toDataURL();
+                };
+                img.src = src;
+            }
+
+            // Set the src of the logo-img to a random logo with a watermark
+            addWatermark(getRandomLogo());
+
+            // Disable right-click on the entire webpage
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault(); // Prevents the default context menu from appearing
+            }, false);
         });
     </script>
 </head>
@@ -130,7 +157,7 @@
     <div id="pb-container">
         <div id="presentation">
             <div class="logo">
-                <img class="logo-img" src="logo.png" alt="Pietro Baiguini"></img>
+                <img class="logo-img" src="logo.png" alt="Buddy"></img>
             </div>
             <div class="tagline">
                 Buddy, the <strong>Best Dog</strong> on the Internets.
