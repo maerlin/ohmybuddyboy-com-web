@@ -125,17 +125,42 @@
                     var canvas = document.createElement('canvas');
                     var ctx = canvas.getContext('2d');
                     
-                    // Set canvas size to the image size
-                    canvas.width = img.width;
-                    canvas.height = img.height;
+                    // Desired dimensions
+                    var desiredWidth = 400; // Set your desired width
+                    var desiredHeight = 400; // Set your desired height
                     
-                    // Draw the image onto the canvas
-                    ctx.drawImage(img, 0, 0);
+                    // Calculate aspect ratio, to resize the image proportionally
+                    var aspect = img.width / img.height;
+                    var newWidth = desiredWidth;
+                    var newHeight = desiredHeight;
                     
-                    // Set watermark text style
-                    ctx.font = '30px Arial';
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)'; // White text with opacity
-                    ctx.fillText('Buddy The Dog (@ohmybuddyboy)', 10, img.height - 30); // Position at bottom left
+                    // Maintain aspect ratio
+                    if (img.width > img.height) {
+                        newHeight = desiredWidth / aspect;
+                    } else {
+                        newWidth = desiredHeight * aspect;
+                    }
+                    
+                    // Set canvas size to the desired size
+                    canvas.width = desiredWidth;
+                    canvas.height = desiredHeight;
+                    
+                    // Calculate center positioning
+                    var xOffset = (desiredWidth - newWidth) / 2;
+                    var yOffset = (desiredHeight - newHeight) / 2;
+                    
+                    // Draw the image onto the canvas, centered
+                    ctx.drawImage(img, xOffset, yOffset, newWidth, newHeight);
+                    
+                    // Rotate and place watermark
+                    ctx.save(); // Save the current state
+                    ctx.translate(canvas.width, canvas.height); // Move to bottom right
+                    ctx.rotate(-Math.PI / 2); // Rotate 90 degrees counterclockwise
+                    ctx.font = '12px Arial'; // Set watermark font
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'; // Semi-transparent black text
+                    var watermarkText = '@ohmybuddyboy';
+                    ctx.fillText(watermarkText, 5, -5); // Position watermark with some padding
+                    ctx.restore(); // Restore the original state
                     
                     // Replace the image src with the canvas image
                     document.querySelector('.logo-img').src = canvas.toDataURL();
