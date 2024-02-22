@@ -100,6 +100,31 @@
             text-decoration: none;
         }
     </style>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            // List of logos available in the 'logos' folder
+            var logos = [
+                'logos/logo0.png',
+                'logos/logo1.png',
+                'logos/logo2.png',
+                'logos/logo3.png',
+                'logos/logo4.png',
+                'logos/logo5.png',
+                'logos/logo6.png',
+                'logos/logo7.png'
+                // Add more image paths as needed
+            ];
+
+            // Function to select a random logo
+            function getRandomLogo() {
+                var index = Math.floor(Math.random() * logos.length);
+                return logos[index];
+            }
+
+            // Set the src of the logo-img to a random logo
+            document.querySelector('.logo-img').src = getRandomLogo();
+        });
+    </script>
 </head>
 <body>
     <div id="pb-container">
