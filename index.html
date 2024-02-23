@@ -104,21 +104,36 @@
     </style>
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function() {
-            var logos = [
-                'logos/logo0.png',
-                'logos/logo1.png',
-                'logos/logo2.png',
-                'logos/logo3.png',
-                'logos/logo4.png',
-                'logos/logo5.png',
-                'logos/logo6.png',
-                'logos/logo7.png'
-                // Add more image paths as needed
-            ];
+            function checkImage(url, onSuccess, onFailure) {
+                var img = new Image();
+                img.onload = onSuccess;
+                img.onerror = onFailure;
+                img.src = url;
+            }
 
-            function getRandomLogo() {
-                var index = Math.floor(Math.random() * logos.length);
-                return logos[index];
+            function loadAndWatermarkLogos() {
+                var index = 0;
+                var logos = [];
+
+                function tryNextLogo() {
+                    let url = 'logos/logo' + index + '.png';
+                    checkImage(url,
+                        function() { // On Success
+                            logos.push(url);
+                            index++;
+                            tryNextLogo(); // Try next logo
+                        },
+                        function() { // On Failure
+                            if (logos.length > 0) {
+                                addWatermark(logos[Math.floor(Math.random() * logos.length)]);
+                            } else {
+                                console.error('No logos found.');
+                            }
+                        }
+                    );
+                }
+
+                tryNextLogo();
             }
 
             function addWatermark(src) {
@@ -170,8 +185,7 @@
                 img.src = src;
             }
 
-            // Set the src of the logo-img to a random logo with a watermark
-            addWatermark(getRandomLogo());
+            loadAndWatermarkLogos();
 
             // Disable right-click on the entire webpage
             document.addEventListener('contextmenu', function(e) {
