@@ -6,200 +6,14 @@
     <meta name="description" content="Buddy - The best dog on the Internet.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link type="image/png" href="favicon.png" rel="shortcut icon" type="image/x-icon">
-    <style type="text/css">
-        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap');
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideInFromTop {
-            from {
-                transform: translateY(-20%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        #presentation, #footer-container {
-            animation: fadeIn 0.75s ease-out;
-        }
-
-        #presentation, #footer-container {
-            animation: slideInFromTop 0.75s ease-out;
-        }
-
-        html, body {
-            font-family: 'Open Sans', sans-serif;
-            background: #fafafa;
-            color: #666666;
-            text-align: center;
-        }
-
-        #pb-container {
-            position: relative;
-            min-height: 95vh;
-        }
-
-        #presentation {
-            padding-top: 5.5rem;
-            padding-bottom: 2.5rem;
-        }
-
-        .logo {
-            margin: 15px;
-        }
-
-        .logo-img {
-            object-fit: contain;
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .contacts {
-            margin: 15px;
-        }
-
-        .contacts-section {
-            text-align: center;
-        }
-
-        .contacts-img {
-            width: 64px;
-        }
-
-        .tagline {
-            font-size: 20px;
-            padding: 0 2rem 0 2rem;
-        }
-
-        #footer-container {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 2.5rem;       
-            font-size: 10px;
-            color: #aaa;
-        }
-
-        #footer {   
-            padding: 0 3rem 0 3rem;
-            font-size: 10px;
-            color: #aaa;
-        }
-
-        a, a:visited {
-            color: #F93507;
-            transition: color 0.3s ease;
-        }
-
-        a:hover, a:active, a:focus {
-            color: #bf2a07;
-            text-decoration: none;
-        }
-    </style>
-    <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", function() {
-            function checkImage(url, onSuccess, onFailure) {
-                var img = new Image();
-                img.onload = onSuccess;
-                img.onerror = onFailure;
-                img.src = url;
-            }
-
-            function loadAndWatermarkLogos() {
-                var index = 0;
-                var logos = [];
-
-                function tryNextLogo() {
-                    let url = 'logos/logo' + index + '.png';
-                    checkImage(url,
-                        function() { // On Success
-                            logos.push(url);
-                            index++;
-                            tryNextLogo(); // Try next logo
-                        },
-                        function() { // On Failure
-                            if (logos.length > 0) {
-                                addWatermark(logos[Math.floor(Math.random() * logos.length)]);
-                            } else {
-                                console.error('No logos found.');
-                            }
-                        }
-                    );
-                }
-
-                tryNextLogo();
-            }
-
-            function addWatermark(src) {
-                var img = new Image();
-                img.onload = function() {
-                    var canvas = document.createElement('canvas');
-                    var ctx = canvas.getContext('2d');
-                    
-                    // Desired dimensions
-                    var desiredWidth = 400; // Set your desired width
-                    var desiredHeight = 400; // Set your desired height
-                    
-                    // Calculate aspect ratio, to resize the image proportionally
-                    var aspect = img.width / img.height;
-                    var newWidth = desiredWidth;
-                    var newHeight = desiredHeight;
-                    
-                    // Maintain aspect ratio
-                    if (img.width > img.height) {
-                        newHeight = desiredWidth / aspect;
-                    } else {
-                        newWidth = desiredHeight * aspect;
-                    }
-                    
-                    // Set canvas size to the desired size
-                    canvas.width = desiredWidth;
-                    canvas.height = desiredHeight;
-                    
-                    // Calculate center positioning
-                    var xOffset = (desiredWidth - newWidth) / 2;
-                    var yOffset = (desiredHeight - newHeight) / 2;
-                    
-                    // Draw the image onto the canvas, centered
-                    ctx.drawImage(img, xOffset, yOffset, newWidth, newHeight);
-                    
-                    // Rotate and place watermark
-                    ctx.save(); // Save the current state
-                    ctx.translate(canvas.width, canvas.height); // Move to bottom right
-                    ctx.rotate(-Math.PI / 2); // Rotate 90 degrees counterclockwise
-                    ctx.font = '12px Arial'; // Set watermark font
-                    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'; // Semi-transparent black text
-                    var watermarkText = '@ohmybuddyboy';
-                    ctx.fillText(watermarkText, 5, -5); // Position watermark with some padding
-                    ctx.restore(); // Restore the original state
-                    
-                    // Replace the image src with the canvas image
-                    document.querySelector('.logo-img').src = canvas.toDataURL();
-                };
-                img.src = src;
-            }
-
-            loadAndWatermarkLogos();
-
-            // Disable right-click on the entire webpage
-            document.addEventListener('contextmenu', function(e) {
-                e.preventDefault(); // Prevents the default context menu from appearing
-            }, false);
-        });
-    </script>
+    <link rel="stylesheet" href="buddy.css">
+    <script src="buddy.js" defer></script>
 </head>
 <body>
     <div id="pb-container">
         <div id="presentation">
             <div class="logo">
                 <a href="https://www.instagram.com/ohmybuddyboy/">
-                    <!--<img class="logo-img" src="logo.png" alt="Instagram"></img>-->
                     <img class="logo-img" src="loading.gif" alt="Instagram"></img>
                 </a>
             </div>
@@ -209,7 +23,6 @@
         </div>
         <div id="footer-container">
             <div id="footer">
-                <!--This website is hosted on the <strong>Interplanetary File System (IPFS)</strong>. Find out more at: <a href="https://ipfs.io">ipfs.io</a>-->
             </div>
         </div>
     </div>
