@@ -83,10 +83,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     const logos = await loadLogos();
     console.log(`Found ${logos.length} logos:`, logos);
     if (logos.length > 0) {
-        const randomLogo = logos[Math.floor(Math.random() * logos.length)];
-        console.log('Selected logo:', randomLogo);
-        const watermarkedLogo = await addWatermark(randomLogo);
-        logoImg.src = watermarkedLogo;
+        // Check if seasonal theme is active (if body has a theme class, don't change logo)
+        const hasSeasonalTheme = document.body.classList.contains('theme-halloween') || 
+                                document.body.classList.contains('theme-christmas') || 
+                                document.body.classList.contains('theme-fourthOfJuly');
+        
+        if (!hasSeasonalTheme) {
+            const randomLogo = logos[Math.floor(Math.random() * logos.length)];
+            console.log('Selected logo:', randomLogo);
+            const watermarkedLogo = await addWatermark(randomLogo);
+            logoImg.src = watermarkedLogo;
+        } else {
+            console.log('Seasonal theme active, logo already set by theme system');
+        }
     } else {
         console.error('No logos found.');
     }

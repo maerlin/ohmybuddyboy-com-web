@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme Tester - Oh My Buddy Boy</title>
+    <link rel="stylesheet" href="buddy.css">
+    <style>
+        .theme-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            font-size: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .theme-dropdown {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+        
+        .theme-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .theme-dropdown button {
+            display: block;
+            width: 100%;
+            margin: 8px 0;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+        
+        .theme-dropdown button:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-halloween {
+            background: #ff6b35;
+            color: white;
+        }
+        
+        .btn-christmas {
+            background: #0f4c75;
+            color: white;
+        }
+        
+        .btn-fourth {
+            background: #1e3a8a;
+            color: white;
+        }
+        
+        .btn-default {
+            background: #666;
+            color: white;
+        }
+        
+        .current-theme {
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #333;
+            font-size: 16px;
+        }
+        
+
+    </style>
+</head>
+<body>
+    <div class="theme-selector">
+        <button class="theme-toggle" onclick="toggleDropdown()" title="Theme Selector">
+            🎨
+        </button>
+        <div class="theme-dropdown" id="theme-dropdown">
+            <div class="current-theme">Current Theme: <span id="current-theme">Default</span></div>
+            <button class="btn-default" onclick="setTheme('default')">Default Theme</button>
+            <button class="btn-halloween" onclick="setTheme('halloween')">🎃 Halloween</button>
+            <button class="btn-christmas" onclick="setTheme('christmas')">🎄 Christmas</button>
+            <button class="btn-fourth" onclick="setTheme('fourthOfJuly')">⭐ 4th of July</button>
+        </div>
+    </div>
+
+    <div id="pb-container">
+        <div id="presentation">
+            <div class="logo">
+                <a href="https://www.instagram.com/ohmybuddyboy/">
+                    <img class="logo-img" src="loading.gif" alt="Instagram"></img>
+                </a>
+            </div>
+            <div class="tagline">
+                Buddy, the <strong>Best Dog</strong> on the Internets.
+            </div>
+        </div>
+        <div id="footer-container">
+            <div id="footer">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme tester functionality
+        function toggleDropdown() {
+            const dropdown = document.getElementById('theme-dropdown');
+            dropdown.classList.toggle('show');
+        }
+        
+        function closeDropdown() {
+            const dropdown = document.getElementById('theme-dropdown');
+            dropdown.classList.remove('show');
+        }
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const selector = document.querySelector('.theme-selector');
+            const dropdown = document.getElementById('theme-dropdown');
+            
+            if (!selector.contains(event.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+        
+        function setTheme(themeName) {
+            console.log(`Setting theme to: ${themeName}`);
+            
+            // Remove all theme classes
+            document.body.classList.remove('theme-halloween', 'theme-christmas', 'theme-fourth-of-july', 'theme-fourthOfJuly');
+            document.getElementById('pb-container').classList.remove('theme-halloween', 'theme-christmas', 'theme-fourth-of-july', 'theme-fourthOfJuly');
+            
+            // Remove existing seasonal background
+            const existingBg = document.body.querySelector('.seasonal-background');
+            if (existingBg) {
+                existingBg.remove();
+            }
+            
+            // Set new theme
+            if (themeName !== 'default') {
+                const themeClass = themeName === 'fourthOfJuly' ? 'theme-fourthOfJuly' : `theme-${themeName}`;
+                console.log(`Adding theme class: ${themeClass}`);
+                document.body.classList.add(themeClass);
+                document.getElementById('pb-container').classList.add(themeClass);
+                addSeasonalBackground(themeName);
+            }
+            
+            // Update current theme display
+            document.getElementById('current-theme').textContent = themeName === 'default' ? 'Default' : themeName;
+            
+            // Update logo for seasonal themes
+            const logoImg = document.querySelector('.logo-img');
+            if (themeName === 'halloween') {
+                logoImg.src = 'logos/logo22.png';
+            } else if (themeName === 'christmas') {
+                logoImg.src = 'logos/logo2.png';
+            } else if (themeName === 'fourthOfJuly') {
+                logoImg.src = 'logos/logo11.png';
+            } else {
+                logoImg.src = 'loading.gif';
+            }
+            
+            console.log(`Theme ${themeName} applied successfully`);
+            
+            // Close dropdown after theme selection
+            closeDropdown();
+        }
+        
+        function addSeasonalBackground(themeName) {
+            const bgElement = document.createElement('div');
+            bgElement.className = 'seasonal-background';
+            
+            console.log(`Adding seasonal background for: ${themeName}`);
+            
+            switch (themeName) {
+                case 'halloween':
+                    bgElement.innerHTML = `
+                        <div class="halloween-elements">
+                            <div class="bat"></div>
+                            <div class="bat"></div>
+                            <div class="bat"></div>
+                            <div class="bat"></div>
+                            <div class="ghost"></div>
+                            <div class="ghost"></div>
+                            <div class="ghost"></div>
+                            <div class="spider"></div>
+                        </div>
+                    `;
+                    break;
+                case 'christmas':
+                    bgElement.innerHTML = `
+                        <div class="christmas-elements">
+                            <div class="snowflake" style="--delay: 0s"></div>
+                            <div class="snowflake" style="--delay: 1s"></div>
+                            <div class="snowflake" style="--delay: 2s"></div>
+                            <div class="snowflake" style="--delay: 3s"></div>
+                            <div class="snowflake" style="--delay: 4s"></div>
+                            <div class="snowflake" style="--delay: 1s"></div>
+                            <div class="snowflake" style="--delay: 6s"></div>
+                            <div class="snowflake" style="--delay: 7s"></div>
+                            <div class="snowflake" style="--delay: 8s"></div>
+                            <div class="snowflake" style="--delay: 9s"></div>
+                        </div>
+                    `;
+                    break;
+                case 'fourthOfJuly':
+                    bgElement.innerHTML = `
+                        <div class="fourth-of-july-elements">
+                            <div class="firework" style="--delay: 0s"></div>
+                            <div class="firework" style="--delay: 1s"></div>
+                            <div class="firework" style="--delay: 2s"></div>
+                            <div class="firework" style="--delay: 3s"></div>
+                            <div class="firework" style="--delay: 4s"></div>
+                        </div>
+                    `;
+                    break;
+            }
+            
+            document.body.appendChild(bgElement);
+            console.log(`Seasonal background added for ${themeName}`);
+        }
+    </script>
+</body>
+</html>

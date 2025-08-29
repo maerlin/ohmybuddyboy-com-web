@@ -16,11 +16,7 @@
     }
 }
 
-#presentation, #footer-container {
-    animation: fadeIn 0.75s ease-out;
-}
-
-#presentation, #footer-container {
+#presentation {
     animation: slideInFromTop 0.75s ease-out;
 }
 
@@ -29,11 +25,13 @@ html, body {
     background: #fafafa;
     color: #666666;
     text-align: center;
+    margin: 0;
+    padding: 0;
 }
 
 #pb-container {
     position: relative;
-    min-height: 95vh;
+    min-height: 100vh;
 }
 
 #presentation {
@@ -42,7 +40,10 @@ html, body {
 }
 
 .logo {
-    margin: 15px;
+    margin-top: 25px;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-bottom: 15px;
 }
 
 .logo-img {
@@ -56,17 +57,333 @@ html, body {
     padding: 0 2rem 0 2rem;
 }
 
-#footer-container {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 2.5rem;       
-    font-size: 10px;
-    color: #aaa;
+/* Seasonal Themes */
+.seasonal-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
 }
 
-#footer {   
-    padding: 0 3rem 0 3rem;
-    font-size: 10px;
-    color: #aaa;
+/* Halloween Theme */
+.theme-halloween {
+    background: linear-gradient(135deg, #1a0f1a 0%, #2d1b2d 50%, #1a0f1a 100%);
+    color: #ff6b35;
+}
+
+.theme-halloween html,
+.theme-halloween body {
+    background: linear-gradient(135deg, #1a0f1a 0%, #2d1b2d 50%, #1a0f1a 100%);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.theme-halloween .tagline {
+    color: #ff6b35;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.halloween-elements {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+.bat {
+    position: absolute;
+    width: 30px;
+    height: 20px;
+    z-index: 10;
+}
+
+.bat:nth-child(1) {
+    top: 80px;
+    left: 10%;
+    animation: fly 6s ease-in-out infinite;
+}
+
+.bat:nth-child(2) {
+    top: 120px;
+    left: 25%;
+    animation: fly 8s ease-in-out infinite;
+    animation-delay: 1s;
+}
+
+.bat:nth-child(3) {
+    top: 90px;
+    left: 40%;
+    animation: fly 7s ease-in-out infinite;
+    animation-delay: 2s;
+}
+
+.bat:nth-child(4) {
+    top: 150px;
+    left: 60%;
+    animation: fly 9s ease-in-out infinite;
+    animation-delay: 3s;
+}
+
+
+
+.bat::before {
+    content: '🦇';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 32px;
+}
+
+.ghost {
+    position: absolute;
+    width: 40px;
+    height: 50px;
+    z-index: 10;
+}
+
+.ghost:nth-child(5) {
+    top: 180px;
+    left: 15%;
+    animation: float 5s ease-in-out infinite;
+    animation-delay: 0.5s;
+}
+
+.ghost:nth-child(6) {
+    top: 220px;
+    left: 75%;
+    animation: float 7s ease-in-out infinite;
+    animation-delay: 2s;
+}
+
+.ghost::before {
+    content: '👻';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+}
+
+.ghost:nth-child(7) {
+    top: 250px;
+    left: 45%;
+    animation: float 6s ease-in-out infinite;
+    animation-delay: 1s;
+}
+
+.spider {
+    position: absolute;
+    top: 200px;
+    right: 150px;
+    width: 25px;
+    height: 25px;
+    z-index: 10;
+    animation: crawl 6s ease-in-out infinite;
+}
+
+.spider::before {
+    content: '🕷️';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+}
+
+@keyframes fly {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(3deg); }
+}
+
+@keyframes sway {
+    0%, 100% { transform: translateX(0) rotate(0deg); }
+    50% { transform: translateX(20px) rotate(3deg); }
+}
+
+@keyframes crawl {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(30px); }
+}
+
+/* Christmas Theme */
+.theme-christmas {
+    background: linear-gradient(135deg, #0f4c75 0%, #3282b8 50%, #bbe1fa 100%);
+    color: #ffffff;
+}
+
+.theme-christmas html,
+.theme-christmas body {
+    background: linear-gradient(135deg, #0f4c75 0%, #3282b8 50%, #bbe1fa 100%);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.theme-christmas .tagline {
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.christmas-elements {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+.snowflake {
+    position: absolute;
+    color: white;
+    font-size: 20px;
+    animation: snowfall 8s linear infinite, fadeIn 0.5s ease-in;
+    animation-delay: var(--delay);
+    z-index: 10;
+    opacity: 0;
+}
+
+.snowflake:nth-child(1) { left: 10%; animation-duration: 6s; }
+.snowflake:nth-child(2) { left: 20%; animation-duration: 8s; }
+.snowflake:nth-child(3) { left: 30%; animation-duration: 7s; }
+.snowflake:nth-child(4) { left: 40%; animation-duration: 9s; }
+.snowflake:nth-child(5) { left: 50%; animation-duration: 6.5s; }
+.snowflake:nth-child(6) { left: 60%; animation-duration: 7.5s; }
+.snowflake:nth-child(7) { left: 70%; animation-duration: 8.5s; }
+.snowflake:nth-child(8) { left: 80%; animation-duration: 7s; }
+.snowflake:nth-child(9) { left: 90%; animation-duration: 6s; }
+.snowflake:nth-child(10) { left: 95%; animation-duration: 9.5s; }
+
+.snowflake::before {
+    content: '❄️';
+    font-size: 24px;
+}
+
+
+
+@keyframes snowfall {
+    0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* 4th of July Theme */
+.theme-fourth-of-july {
+    background: linear-gradient(135deg, #002868 0%, #ffffff 25%, #ffffff 75%, #bf0a30 100%);
+    color: #002868;
+}
+
+.theme-fourth-of-july html,
+.theme-fourth-of-july body {
+    background: linear-gradient(135deg, #002868 0%, #ffffff 25%, #ffffff 75%, #bf0a30 100%);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.theme-fourth-of-july .tagline {
+    color: #002868;
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+}
+
+/* Also support the camelCase version for consistency */
+.theme-fourthOfJuly {
+    background: linear-gradient(135deg, #002868 0%, #ffffff 25%, #ffffff 75%, #bf0a30 100%);
+    color: #002868;
+}
+
+.theme-fourthOfJuly html,
+.theme-fourthOfJuly body {
+    background: linear-gradient(135deg, #002868 0%, #ffffff 25%, #ffffff 75%, #bf0a30 100%);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.theme-fourthOfJuly .tagline {
+    color: #002868;
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+}
+
+.fourth-of-july-elements {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+.firework {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    z-index: 10;
+    animation: firework 4s ease-out infinite;
+    animation-delay: var(--delay);
+}
+
+.firework:nth-child(1) { left: 15%; top: 50%; }
+.firework:nth-child(2) { left: 35%; top: 30%; }
+.firework:nth-child(3) { left: 50%; top: 40%; }
+.firework:nth-child(4) { left: 65%; top: 25%; }
+.firework:nth-child(5) { left: 85%; top: 60%; }
+
+.firework::before {
+    content: '⭐';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 35px;
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+}
+
+
+
+@keyframes firework {
+    0% {
+        transform: scale(0) rotate(0deg);
+        opacity: 0;
+    }
+    20% {
+        transform: scale(1.2) rotate(180deg);
+        opacity: 1;
+    }
+    80% {
+        transform: scale(1) rotate(360deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.8) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+@keyframes twinkle {
+    0% { 
+        opacity: 0.3; 
+        transform: translateX(-50%) scale(0.7) rotate(0deg); 
+        filter: brightness(0.8);
+    }
+    100% { 
+        opacity: 1; 
+        transform: translateX(-50%) scale(1.3) rotate(180deg); 
+        filter: brightness(1.2);
+    }
 }
